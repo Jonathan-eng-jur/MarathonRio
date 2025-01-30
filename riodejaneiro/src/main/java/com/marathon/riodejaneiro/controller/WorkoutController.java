@@ -1,5 +1,6 @@
 package com.marathon.riodejaneiro.controller;
 
+import com.marathon.riodejaneiro.model.TrainingWeek;
 import com.marathon.riodejaneiro.model.Workout;
 import com.marathon.riodejaneiro.service.WorkoutService;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/workout")
+@CrossOrigin(origins = "*")
 public class WorkoutController {
 
     @Autowired
@@ -41,9 +43,10 @@ public class WorkoutController {
             @PathVariable String email,
             @PathVariable int workoutId,
             @RequestParam double distance,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime duration) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime duration,
+            @Valid @RequestBody(required = false) TrainingWeek trainingWeek) {
         try {
-            Workout updatedWorkout = runningWorkoutService.updateLongPace(email, workoutId, distance, duration);
+            Workout updatedWorkout = runningWorkoutService.updateWorkout(email, workoutId, distance, duration, trainingWeek);
             return new ResponseEntity<>(updatedWorkout, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

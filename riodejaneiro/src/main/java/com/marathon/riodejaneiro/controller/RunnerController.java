@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/runner")
+@CrossOrigin(origins = "*")
 public class RunnerController {
 
     @Autowired
@@ -27,9 +28,9 @@ public class RunnerController {
     public ResponseEntity<List<Workout>> getWorkoutsForRunner(@PathVariable String email) {
         List<Workout> workouts = runnerService.getWorkoutsForRunner(email);
         if (workouts.isEmpty()) {
-            return ResponseEntity.notFound().build(); // Retorna 404 se não encontrar
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(workouts); // Retorna 200 com a lista de treinos
+        return ResponseEntity.ok(workouts);
     }
 
     @GetMapping("/all")
@@ -39,7 +40,7 @@ public class RunnerController {
 
     @PostMapping
     public ResponseEntity<Runner> createOrUpdateRunner(@RequestBody Runner runner) {
-        boolean isNew = !runnerService.existsById(runner.getEmail()); // Verifica se é um novo corredor
+        boolean isNew = !runnerService.existsById(runner.getEmail());
         Runner savedRunner = runnerService.createOrUpdateRunner(runner);
 
         if (isNew) {

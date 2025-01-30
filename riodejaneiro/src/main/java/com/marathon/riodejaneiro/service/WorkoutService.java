@@ -66,14 +66,12 @@ public class WorkoutService {
         return workoutRepository.findAll();
     }
 
-    public Workout updateLongPace(String email, int week, double distance, LocalTime duration) {
-        if (distance <= 0) {
-            throw new IllegalArgumentException("A distância deve ser maior que zero");
-        }
+    public Workout updateWorkout(String email, int week, double distance, LocalTime duration, TrainingWeek trainingWeek) {
         Workout workout = workoutRepository.findByRunnerEmailAndWeek(email, week);
 
         workout.setLongRunDistance(distance);
         workout.setLongRunDurationMinutes(duration);
+        workout.setTrainingWeek(trainingWeek);
 
         if (workout.getLongRunDistance() > 0 && workout.getLongRunDurationMinutes() != null) {
             LocalTime pace = calculatePace(workout.getLongRunDistance(), workout.getLongRunDurationMinutes());
