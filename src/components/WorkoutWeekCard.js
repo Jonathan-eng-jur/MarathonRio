@@ -1,7 +1,8 @@
 import React from "react";
+import "../styles/WorkoutWeekCard.css";
 
 const WorkoutWeekCard = ({
-  week,
+  week = {},
   weekIndex,
   weeks,
   setWeeks,
@@ -9,10 +10,35 @@ const WorkoutWeekCard = ({
   handleWorkoutRegistration,
   handleUpdateWorkout,
 }) => {
+
+  const daysOfWeek = {
+    monday: "Segunda-feira",
+    tuesday: "Terça-feira",
+    wednesday: "Quarta-feira",
+    thursday: "Quinta-feira",
+    friday: "Sexta-feira",
+    saturday: "Sábado",
+    sunday: "Domingo",
+  };
+
+  const workoutData = {
+    monday: "",
+    tuesday: "",
+    wednesday: "",
+    thursday: "",
+    friday: "",
+    saturday: "",
+    sunday: "",
+    ...(week.workout || {}),
+  };
+
   const handleChange = (e, day) => {
     const updatedWeeks = [...weeks];
-    updatedWeeks[weekIndex].workout[day] = e.target.value;
-    setWeeks(updatedWeeks);
+    if (!updatedWeeks[weekIndex].workout) {
+      updatedWeeks[weekIndex].workout = {}; 
+    }
+    updatedWeeks[weekIndex].workout[day] = e.target.value; 
+    setWeeks(updatedWeeks); 
   };
 
   const handleLongRunChange = (e, field) => {
@@ -23,16 +49,15 @@ const WorkoutWeekCard = ({
 
   return (
     <div className="workout-week-card-content">
-      {Object.entries(week.workout).map(([day, value]) => {
-        if (["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"].includes(day)) {
+      {Object.entries(workoutData).map(([day, value]) => {
+        if (daysOfWeek[day]) {
           return (
             <div key={day} className="workout-field">
-              <label>{day.charAt(0).toUpperCase() + day.slice(1)}:</label>
+              <label>{daysOfWeek[day]}:</label>
               <input
                 type="text"
-                value={value}
+                value={value || ""}
                 onChange={(e) => handleChange(e, day)}
-                disabled={week.hasWorkout}
                 className="workout-input"
               />
             </div>
@@ -42,17 +67,18 @@ const WorkoutWeekCard = ({
       })}
 
       <div className="workout-field">
-        <label>Distância do Long Run (km):</label>
+        <label>Distância do Longão (km):</label>
         <input
           type="number"
-          value={week.longRunDistance}
+          placeholder="Ex: 15"
+          value={week.longRunDistance || ""}
           onChange={(e) => handleLongRunChange(e, "longRunDistance")}
           className="workout-input"
         />
       </div>
 
       <div className="workout-field">
-        <label>Duração do Long Run (minutos):</label>
+        <label>Duração do Longão (hh:mm:ss):</label>
         <input
           type="time"
           step="1"
@@ -63,30 +89,27 @@ const WorkoutWeekCard = ({
       </div>
 
       <div className="workout-field">
-        <label>Pace Longão:</label>
+        <label>Pace Longão (calculado automaticamente):</label>
         <input
           type="text"
+          placeholder="Calculado após inserir KM, Duração e Atualizar."
           value={week.longRunPace || ""}
           readOnly
           className="workout-input"
         />
       </div>
 
-      {!week.hasWorkout ? (
-        <button
-          onClick={() => handleWorkoutRegistration(week)}
-          className="button workout-register-button"
-        >
-          Registrar Treino
-        </button>
-      ) : (
-        <button
-          onClick={() => handleUpdateWorkout(week)}
-          className="button workout-update-button"
-        >
-          Atualizar Treino
-        </button>
-      )}
+      <button
+        onClick={() =>
+          week.hasWorkout
+            ? handleUpdateWorkout(week)
+            : handleWorkoutRegistration(week)
+        }
+        className={`button ${week.hasWorkout ? "workout-update-button" : "workout-register-button"
+          }`}
+      >
+        {week.hasWorkout ? "Atualizar Treino" : "Registrar Treino"}
+      </button>
     </div>
   );
 };

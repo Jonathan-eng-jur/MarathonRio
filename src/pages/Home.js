@@ -120,20 +120,21 @@ const Home = () => {
 
   const handleUpdateWorkout = async (week) => {
     if (selectedRunner && week) {
-      const { longRunDistance, longRunDurationMinutes } = week;
-
+      const { longRunDistance, longRunDurationMinutes, workout } = week;
+  
       const url = `http://localhost:8080/workout/${selectedRunner.email}/${week.week}?distance=${longRunDistance}&duration=${longRunDurationMinutes}`;
-
+  
       try {
         const response = await fetch(url, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(workout),
         });
-
+  
         if (response.ok) {
           const data = await response.json();
           alert("Treino atualizado com sucesso!");
-
+  
           setWeeks((prevWeeks) =>
             prevWeeks.map((w) =>
               w.week === week.week
@@ -142,6 +143,7 @@ const Home = () => {
                     longRunDistance: week.longRunDistance,
                     longRunDurationMinutes: week.longRunDurationMinutes,
                     longRunPace: data.longRunPace,
+                    workout: data.workout || w.workout,
                   }
                 : w
             )

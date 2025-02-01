@@ -1,6 +1,6 @@
-// components/RegisterForm.js
 import React, { useState } from "react";
 import { validateName, validateEmail } from "../utils/validations";
+import "../styles/RegisterForm.css";
 
 const RegisterForm = ({ onSubmit, onCancel }) => {
   const [newRunner, setNewRunner] = useState({ name: "", email: "" });
@@ -17,7 +17,7 @@ const RegisterForm = ({ onSubmit, onCancel }) => {
     <div className="register-form">
       <h2>Cadastrar Usuário</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div style={{ textAlign: "left" }}> 
           <label>Nome:</label>
           <input
             type="text"
@@ -26,7 +26,7 @@ const RegisterForm = ({ onSubmit, onCancel }) => {
             className="input-field"
           />
         </div>
-        <div>
+        <div style={{ textAlign: "left" }}>
           <label>Email:</label>
           <input
             type="email"
@@ -36,12 +36,14 @@ const RegisterForm = ({ onSubmit, onCancel }) => {
           />
         </div>
         {error && <p className="error">{error}</p>}
-        <button type="submit" className="button">
-          Cadastrar
-        </button>
-        <button type="button" onClick={onCancel} className="button-cancel">
-          Cancelar
-        </button>
+        <div className="button-container">
+          <button type="submit" className="button">
+            Cadastrar
+          </button>
+          <button type="button" onClick={onCancel} className="button-cancel">
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   );

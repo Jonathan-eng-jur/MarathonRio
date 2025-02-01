@@ -1,6 +1,3 @@
-/* Runner.css */
-
-/* Cartão do corredor */
 .runner-card {
     background-color: #1d2a3a;
     border-radius: 10px;
@@ -8,48 +5,86 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease-in-out;
     margin-bottom: 20px;
-    text-align: center; /* Centraliza o conteúdo dentro do cartão */
-    min-height: 70px; /* Altura mínima para os cartões */
+    text-align: center; 
+    min-height: 70px; 
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Garante que o conteúdo seja centralizado verticalmente */
+    justify-content: center; 
     width: 100%;
-    max-width: 400px; /* Largura máxima dos cartões */
+    max-width: 400px;
 }
 
-/* Efeito de hover */
 .runner-card:hover {
     transform: translateY(-10px);
 }
 
-/* Informações do corredor */
 .runner-info p {
     margin: 10px 0;
     color: #ddd;
     font-size: 16px;
 }
 
-/* Destacar os nomes */
 .runner-info strong {
     color: #fff;
-    font-size: 18px; /* Aumenta o tamanho do texto do label (Nome/Email) */
+    font-size: 18px; 
 }
 
-/* Centralizar o nome do corredor */
 .runner-info .name {
     font-size: 22px;
     font-weight: bold;
     color: #fff;
     margin-top: 10px;
-    text-transform: capitalize; /* Para deixar o nome com a primeira letra maiúscula */
+    text-transform: capitalize;
 }
 
-/* Adicionando mais espaçamento entre os cartões */
 .runners-list {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px; /* Espaço entre os cartões */
+    gap: 20px;
     width: 100%;
     padding: 20px 0;
 }
+
+.week-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .week-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .week-date-range {
+    font-size: 0.9em;
+    color: #ffffff;
+  }
+  
+  .expand-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .expand-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .week-status {
+    margin-bottom: 10px;
+  }
+  
+  .status-registered {
+    color: green;
+  }
+  
+  .status-not-registered {
+    color: red;
+  }

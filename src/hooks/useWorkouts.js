@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { getWorkoutsForRunner } from "../services/api";
-import { INITIAL_WEEKS } from "../utils/constants"; // Certifique-se de que INITIAL_WEEKS está definido
+import { INITIAL_WEEKS } from "../utils/constants";
 
 const useWorkouts = () => {
-  const [weeks, setWeeks] = useState(INITIAL_WEEKS); // Inicialize com INITIAL_WEEKS
+  const [weeks, setWeeks] = useState(INITIAL_WEEKS);
 
   const loadWorkouts = async (email) => {
     try {
