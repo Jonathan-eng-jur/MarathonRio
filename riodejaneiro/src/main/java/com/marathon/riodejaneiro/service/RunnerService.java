@@ -21,12 +21,11 @@ public class RunnerService {
     private WorkoutRepository workoutRepository;
 
     public Optional<Runner> getRunner(String email) {
-        return runnerRepository.findById(email);
+        return runnerRepository.findByEmail(email);
     }
 
-    // Método para obter os treinos de um corredor por e-mail
     public List<Workout> getWorkoutsForRunner(String email) {
-        Optional<Runner> runnerOptional = runnerRepository.findById(email);
+        Optional<Runner> runnerOptional = runnerRepository.findByEmail(email);
         if (runnerOptional.isPresent()) {
             return runnerOptional.get().getRunningWorkouts();
         }
@@ -34,7 +33,7 @@ public class RunnerService {
     }
 
     public Runner createOrUpdateRunner(Runner runner) {
-        Optional<Runner> existingRunner = runnerRepository.findById(runner.getEmail());
+        Optional<Runner> existingRunner = runnerRepository.findByEmail(runner.getEmail());
         if (existingRunner.isPresent()) {
             Runner existing = existingRunner.get();
             existing.setName(runner.getName());
@@ -49,7 +48,7 @@ public class RunnerService {
         return runnerRepository.findAll();
     }
 
-    public boolean existsById(@Email String email) {
-        return runnerRepository.existsById(email);
+    public boolean existsById(String email) {
+        return runnerRepository.existsByEmail(email);
     }
 }
